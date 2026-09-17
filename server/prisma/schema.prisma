@@ -1,0 +1,58 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Company{
+  id Int @id @default(autoincrement())
+  name String
+  address String
+  customers Customer[]
+  workers Worker[]
+
+}
+model Customer{
+  id Int @id @default(autoincrement())
+  name String
+  companyId Int
+  company Company @relation(fields: [companyId], references: [id])
+
+  services Service[]
+}
+model Worker{
+  id Int @id @default(autoincrement())
+  name String
+  companyId Int
+  company Company @relation(fields: [companyId], references: [id])
+
+  services Service[]
+}
+
+model Service{
+  id Int @id @default(autoincrement())
+
+  customerId Int
+  customer Customer @relation(fields: [customerId], references: [id])
+
+  workerId Int?
+  worker Worker? @relation(fields: [workerId], references: [id])
+
+  date DateTime
+
+  status ServiceStatus @default(SCHEDULED)
+}
+
+enum ServiceStatus{
+  SCHEDULED
+  COMPLETED
+  CANCELLED
+}

@@ -1,4 +1,3 @@
-import { log } from "console"
 import {prisma} from "./lib/prisma"
 
 

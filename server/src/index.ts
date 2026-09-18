@@ -1,7 +1,6 @@
 import express from "express";
 import { prisma } from "./lib/prisma"
 import { Prisma } from "./generated/prisma/client";
-import { error } from "console";
 
 const app = express()
 
